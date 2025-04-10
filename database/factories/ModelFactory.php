@@ -1,5 +1,6 @@
 <?php
 
+use Faker\Generator as Faker;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -11,11 +12,23 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
+    ];
+});
+
+
+$factory->define(App\Product::class, function (Faker $faker) {
+    return [
+        'name' => $faker->unique()->word,
+        'description' => $faker->sentence,
+        'price' => $faker->randomFloat(2, 1, 1000),
+        'stock' => $faker->numberBetween(0, 100),
+        'created_at' => $faker->dateTimeBetween('-1 year', 'now'),
+        'updated_at' => $faker->dateTimeBetween('-1 year', 'now'),
     ];
 });
